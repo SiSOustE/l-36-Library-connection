@@ -1,85 +1,86 @@
-document.getElementById('loginForm').addEventListener('submit', function (event) {
-  event.preventDefault(); // Предотвращаем отправку формы
-
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
-  const messageDiv = document.getElementById('message');
-
-  // Простейшая валидация
-  if (username === 'admin' && password === 'password') {
-    messageDiv.textContent = 'Успешный вход!';
-    messageDiv.style.color = 'green';
-  } else {
-    messageDiv.textContent = 'Неверное имя пользователя или пароль.';
-    messageDiv.style.color = 'red';
-  }
-});
-
-/*
-Теперь давайте настроим файл script.js, используя i18next для управления переводами.
-*/
-
-// Настройка i18next
-i18next.init({
-  lng: 'ru', // начальный язык
-  resources: {
-    ru: {
-      translation: {
-        title: "Авторизация",
-        usernameLabel: "Имя пользователя:",
-        passwordLabel: "Пароль:",
-        submitButton: "Войти",
-        toggleButton: "EN",
-        successMessage: "Успешный вход!",
-        errorMessage: "Неверное имя пользователя или пароль."
+document.addEventListener("DOMContentLoaded", function() {
+  // Настройка i18next
+  i18next.init({
+      lng: 'ru',
+      resources: {
+          ru: {
+              translation: {
+                  title: "Регистрация",
+                  usernameLabel: "Имя пользователя:",
+                  passwordLabel: "Пароль:",
+                  submitButton: "Зарегистрироваться",
+                  toggleButton: "EN",
+                  successMessage: "Регистрация успешна!",
+                  errorMessage: "Пожалуйста, согласитесь с условиями."
+              }
+          },
+          en: {
+              translation: {
+                  title: "Registration",
+                  usernameLabel: "Username:",
+                  passwordLabel: "Password:",
+                  submitButton: "Register",
+                  toggleButton: "RU",
+                  successMessage: "Registration successful!",
+                  errorMessage: "Please agree to the terms."
+              }
+          }
       }
-    },
-    en: {
-      translation: {
-        title: "Login",
-        usernameLabel: "Username:",
-        passwordLabel: "Password:",
-        submitButton: "Login",
-        toggleButton: "RU",
-        successMessage: "Successful login!",
-        errorMessage: "Incorrect username or password."
+  }, function(err, t) {
+      updateLanguage();
+  });
+
+  // Переключение языка
+  document.getElementById('language-toggle').addEventListener('click', function() {
+      const newLang = i18next.language === 'ru' ? 'en' : 'ru';
+      i18next.changeLanguage(newLang, () => {
+          updateLanguage();
+      });
+  });
+
+  // Функция обновления языка
+  function updateLanguage() {
+      const titleElement = document.getElementById('form-title');
+      if (titleElement) {
+          titleElement.textContent = i18next.t('title');
       }
-    }
+      
+      const usernameLabel = document.querySelector('label[for="username"]');
+      if (usernameLabel) {
+          usernameLabel.textContent = i18next.t('usernameLabel');
+      }
+      
+      const passwordLabel = document.querySelector('label[for="password"]');
+      if (passwordLabel) {
+          passwordLabel.textContent = i18next.t('passwordLabel');
+      }
+      
+      const submitButton = document.querySelector('button[type="submit"]');
+      if (submitButton) {
+          submitButton.textContent = i18next.t('submitButton');
+      }
+      
+      const toggleButton = document.getElementById('language-toggle');
+      if (toggleButton) {
+          toggleButton.textContent = i18next.t('toggleButton');
+      }
   }
-}, function (err, t) {
-  // Обновляем интерфейс после загрузки переводов
-  updateLanguage();
-});
+  
+  // Обработка отправки формы
+  document.getElementById('registrationForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Предотвращаем отправку формы
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const agreeTerms = document.getElementById('agreeTerms').checked;
+      const messageDiv = document.getElementById('message');
 
-document.getElementById('loginForm').addEventListener('submit', function (event) {
-  event.preventDefault(); // Предотвращаем отправку формы
-
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
-  const messageDiv = document.getElementById('message');
-
-  // Простейшая валидация
-  if (username === 'admin' && password === 'password') {
-    messageDiv.textContent = i18next.t('successMessage');
-    messageDiv.style.color = 'green';
-  } else {
-    messageDiv.textContent = i18next.t('errorMessage');
-    messageDiv.style.color = 'red';
-  }
-});
-
-// Переключение языка
-document.getElementById('language-toggle').addEventListener('click', function () {
-  const newLang = i18next.language === 'ru' ? 'en' : 'ru';
-  i18next.changeLanguage(newLang, () => {
-    updateLanguage();
+      if (!agreeTerms) {
+          messageDiv.textContent = i18next.t('errorMessage');
+          messageDiv.style.color = 'red';
+          return;
+      }
+      
+      messageDiv.textContent = i18next.t('successMessage');
+      messageDiv.style.color = 'green';
   });
 });
-
-function updateLanguage() {
-  document.getElementById('form-title').textContent = i18next.t('title');
-  document.getElementById('label-username').textContent = i18next.t('usernameLabel');
-  document.getElementById('label-password').textContent = i18next.t('passwordLabel');
-  document.querySelector('button[type="submit"]').textContent = i18next.t('submitButton');
-  document.getElementById('language-toggle').textContent = i18next.t('toggleButton');
-}

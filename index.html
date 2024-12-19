@@ -3,28 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Форма авторизации</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://unpkg.com/i18next@21.6.3/dist/umd/i18next.min.js"></script>
-</head>
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="./style.css">
+  </head>
 <body>
     <div class="container">
-        <h2 id="form-title">Авторизация</h2>
-        <form id="loginForm">
+        <h1 class="form-title">Регистрация</h1>
+        <form id="registrationForm" class="form">
             <div class="form-group">
-                <label for="username" id="label-username">Имя пользователя:</label>
-                <input type="text" id="username" name="username" required>
+                <label for="username">Имя пользователя:</label>
+                <input type="text" id="username" required>
             </div>
             <div class="form-group">
-                <label for="password" id="label-password">Пароль:</label>
-                <input type="password" id="password" name="password" required>
+                <label for="password">Пароль:</label>
+                <input type="password" id="password" required>
             </div>
-            <button type="submit">Войти</button>
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="agreeTerms" required>
+                    Я согласен с условиями
+                </label>
+            </div>
+            <button type="submit" class="btn">Зарегистрироваться</button>
         </form>
-        <div id="message"></div>
-        <button id="language-toggle">EN</button>
+        <div id="message" class="message"></div>
+        <button id="language-toggle" class="toggle-btn">EN</button>
     </div>
-    
+
+    <script src="https://unpkg.com/i18next/i18next.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
