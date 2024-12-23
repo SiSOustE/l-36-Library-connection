@@ -1,4 +1,3 @@
-document.addEventListener("DOMContentLoaded", function() {
     // Настройка i18next
     import ru from "../data/ru.js";
     import en from "../data/en.js";
@@ -86,4 +85,3 @@ document.addEventListener("DOMContentLoaded", function() {
         messageDiv.textContent = i18next.t('successMessage');
         messageDiv.style.color = 'green';
     });
-});
